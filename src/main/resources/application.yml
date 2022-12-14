@@ -1,5 +1,6 @@
 server:
   port: 8080
+  forward-headers-strategy: framework
 
 spring:
   security:
@@ -31,3 +32,4 @@ springdoc:
   swagger-ui:
     path: swagger-ui.html
     operationsSorter: method
+
