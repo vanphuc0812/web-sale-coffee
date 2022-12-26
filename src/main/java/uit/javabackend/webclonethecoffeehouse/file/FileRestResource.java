@@ -10,6 +10,7 @@ import uit.javabackend.webclonethecoffeehouse.security.authorization.TCHOperatio
 
 @RestController
 @RequestMapping("api/Files")
+@CrossOrigin(origins = "*")
 public class FileRestResource {
     private final FileService fileService;
 

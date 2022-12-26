@@ -14,6 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(value ="http://localhost:8081", allowCredentials = "true")
 public class AuthRestResource {
     private final AuthService authService;
 
