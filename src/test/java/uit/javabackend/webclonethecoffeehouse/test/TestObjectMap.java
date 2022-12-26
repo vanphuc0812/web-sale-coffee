@@ -1,11 +1,12 @@
 package uit.javabackend.webclonethecoffeehouse.test;
 
-import uit.javabackend.webclonethecoffeehouse.common.util.DateTimeUtils;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import uit.javabackend.webclonethecoffeehouse.order.enums.OrderProductTopping;
 
 public class TestObjectMap {
+
+
     public static void main(String[] args) {
 //        VnpayTransactionDto vnpayTransactionDto = new VnpayTransactionDto();
 //        vnpayTransactionDto.setVnp_Amount("43434");
@@ -25,9 +26,17 @@ public class TestObjectMap {
 //        System.out.println(fields);
 
 
-        String dateTimeConvert = "2022-12-03 19:29:14.883484";
-        LocalDateTime d = LocalDateTime.parse(dateTimeConvert);
-       // String converted = d.format(DateTimeFormatter.ofPattern(DateTimeUtils.DATETIME_FORMAT_VNPAY));
-        System.out.println();
+//        String dateTimeConvert = "2022-12-03 19:29:14.883484";
+//        LocalDateTime d = LocalDateTime.parse(dateTimeConvert);
+//       // String converted = d.format(DateTimeFormatter.ofPattern(DateTimeUtils.DATETIME_FORMAT_VNPAY));
+//        System.out.println();
+
+        int price = OrderProductTopping.KEM_PHO_MAI_MACCHIATO.GetPrice();
+        OrderProductTopping topping = OrderProductTopping.DAO_MIENG;
+        System.out.println(topping);
+
     }
+
+ 
+
 }

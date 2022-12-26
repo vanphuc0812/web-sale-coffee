@@ -7,15 +7,18 @@ import org.springframework.transaction.annotation.Transactional;
 import uit.javabackend.webclonethecoffeehouse.business.dto.BusinessDTO;
 import uit.javabackend.webclonethecoffeehouse.business.model.Business;
 import uit.javabackend.webclonethecoffeehouse.business.repository.BusinessRepository;
+import uit.javabackend.webclonethecoffeehouse.common.exception.TCHBusinessException;
 import uit.javabackend.webclonethecoffeehouse.common.service.GenericService;
 import uit.javabackend.webclonethecoffeehouse.common.util.TCHMapper;
 
 import javax.validation.ValidationException;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface BusinessService extends GenericService<Business, BusinessDTO, UUID> {
 
     BusinessDTO update(BusinessDTO businessDTO);
+    BusinessDTO getById(UUID id);
 }
 
 @Service
@@ -23,7 +26,7 @@ public interface BusinessService extends GenericService<Business, BusinessDTO, U
 class BusinessServiceImp implements BusinessService {
     private final BusinessRepository repository;
     private final TCHMapper mapper;
-    private final ValidationException businessIsNotExisted = new ValidationException("Business is not existed.");
+    private final TCHBusinessException businessIsNotExisted = new TCHBusinessException("Business is not existed.");
 
 
     BusinessServiceImp(BusinessRepository repository, TCHMapper mapper) {
@@ -59,5 +62,12 @@ class BusinessServiceImp implements BusinessService {
         curBusiness.setImageUrl(businessDTO.getImageUrl());
 
         return save(curBusiness, Business.class, BusinessDTO.class);
+    }
+
+    @Override
+    public BusinessDTO getById(UUID id) {
+        Business curBusiness = repository.findById(id)
+                .orElseThrow(() -> businessIsNotExisted);
+        return  mapper.map(curBusiness,BusinessDTO.class) ;
     }
 }

@@ -9,6 +9,8 @@ import uit.javabackend.webclonethecoffeehouse.role.service.OperationService;
 import uit.javabackend.webclonethecoffeehouse.security.authorization.TCHOperation;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/OperationsManagement")
@@ -19,13 +21,13 @@ public class OperationRestResource {
         this.operationService = operationService;
     }
 
-    @TCHOperation(name = "RoleSystemManagement")
+    @TCHOperation(name = "GetAllOperations")
     @GetMapping("/GetAllOperations")
     public Object findAll() {
         return ResponseUtil.get(operationService.findAllDto(OperationDTO.class), HttpStatus.OK);
     }
 
-    @TCHOperation(name = "RoleSystemManagement")
+    @TCHOperation(name = "SaveOperation")
     @PostMapping("/SaveOperation")
     public Object save(@RequestBody @Valid OperationDTO dto) {
         return ResponseUtil.get(
@@ -34,13 +36,22 @@ public class OperationRestResource {
         );
     }
 
-    @TCHOperation(name = "RoleSystemManagement")
+    @TCHOperation(name = "SaveOperation")
+    @PostMapping("/SaveOperations/{role-id}")
+    public Object saveOperations(@RequestBody List<OperationDTO> dtos, @PathVariable("role-id") UUID roleId) {
+        return ResponseUtil.get(
+                operationService.saveOperations(dtos, roleId)
+                , HttpStatus.OK
+        );
+    }
+
+    @TCHOperation(name = "UpdateOperation")
     @PutMapping("/UpdateOperation")
     public Object update(@RequestBody OperationDTO operation) {
         return ResponseUtil.get(operationService.update(operation), HttpStatus.OK);
     }
 
-    @TCHOperation(name = "RoleSystemManagement")
+    @TCHOperation(name = "DeleteOperation")
     @DeleteMapping("/DeleteOperation")
     public Object delete(@RequestParam("code") String code) {
         operationService.deleteByCode(code);

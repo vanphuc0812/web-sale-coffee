@@ -1,7 +1,6 @@
 server:
   port: 8080
   forward-headers-strategy: framework
-
 spring:
   security:
     oauth2:
@@ -13,6 +12,17 @@ spring:
             scope:
               - email
               - profile
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: developweb2401@gmail.com
+    password: yfnrtbhzjsyuxnph
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   jpa:
     hibernate:
       ddl-auto: update
@@ -33,3 +43,6 @@ springdoc:
     path: swagger-ui.html
     operationsSorter: method
 
+tch:
+  configcros:
+    alloworigin: https://web-clone-the-coffee-house-production.up.railway.app,https://spectacular-clafoutis-af79ec.netlify.app,http://14.187.171.9:8081

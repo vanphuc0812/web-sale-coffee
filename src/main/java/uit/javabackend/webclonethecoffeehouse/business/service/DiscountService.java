@@ -17,6 +17,7 @@ import uit.javabackend.webclonethecoffeehouse.product.model.ProductGroup;
 import javax.validation.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -29,6 +30,8 @@ public interface DiscountService extends GenericService<Discount, DiscountDTO, U
     DiscountWithUserDiscountDTO removeUserDiscount(List<UUID> ids, UUID discountId);
     DiscountWithUserDiscountDTO getDiscountWithUserDiscountDTO (UUID discountId);
     List<DiscountWithUserDiscountDTO>getAllDiscountWithUserDiscountDTO ();
+
+    DiscountDTO checkCoupon(String codeDiscount);
 
 }
 
@@ -77,6 +80,7 @@ class DiscountServiceImp implements DiscountService {
 
         curDiscount.setCode(discountDTO.getCode());
         curDiscount.setDescription(discountDTO.getDescription());
+        curDiscount.setImageUrl(discountDTO.getImageUrl());
         curDiscount.setNumbersOfUsers(discountDTO.getNumbersOfUsers());
         curDiscount.setLimitAmountOnUser(discountDTO.getLimitAmountOnUser());
         curDiscount.setEffectiveDay(discountDTO.getEffectiveDay());
@@ -125,6 +129,15 @@ class DiscountServiceImp implements DiscountService {
                 }
         );
         return discountWithUserDiscountDTOList;
+    }
+
+    @Override
+    public DiscountDTO checkCoupon(String codeDiscount) {
+        Optional<Discount> discount = repository.findByCode(codeDiscount);
+        if(discount.isEmpty()){
+            throw discountIsNotExisted;
+        }
+        return getMapper().map(discount,DiscountDTO.class);
     }
 
 
